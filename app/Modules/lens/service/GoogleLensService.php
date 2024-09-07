@@ -40,7 +40,7 @@ class GoogleLensService
             ]);
 
             $result = json_decode($response->getBody(), true);
-            Storage::disk('public')->delete($imagePath);
+//            Storage::disk('public')->delete($imagePath);
 
             return response()->json([
                 'result' => $result

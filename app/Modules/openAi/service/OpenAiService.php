@@ -21,7 +21,7 @@ class OpenAiService
         $url = 'https://pm1.aminoapps.com/7743/e30571a8e830061622218df192213e710d5ea271r1-1152-2048v2_uhq.jpg';
         $language = $request->input('language', 'en'); // Default language is English
 
-        $apiKey = null;
+        $apiKey = getenv('key');
 
         $client = new Client();
 
@@ -39,7 +39,7 @@ class OpenAiService
                             'content' => [
                                 [
                                     'type' => 'text',
-                                    'text' => "You are an advanced assistant for recognizing objects in a photo. You recognize the text in the image and analyze the text and you advise me what to respond to chat, you advice me the next message based on context of the text, and your responce should only contain with advice without your own addition",
+                                    'text' => "You are an advanced assistant for recognizing objects in a photo. You recognize the text in the image and analyze the text and you advise me what to respond to chat, you advice me the next message based on context of the text, and your responce should only contain with advice without your own addition, your advice should contain from 3-5 sentences",
                                 ],
                                 [
                                     'type' => 'image_url',

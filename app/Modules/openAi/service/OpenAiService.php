@@ -13,7 +13,7 @@ class OpenAiService
 
     public function recognizeObject(Request $request)
     {
-        /* $request->validate([
+        /* $request->validate([ w
              'url' => 'required|url',
              'language' => 'nullable|string', // If language needs to be passed, you can extend this
          ]);*/

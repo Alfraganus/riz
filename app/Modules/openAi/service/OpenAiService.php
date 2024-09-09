@@ -19,7 +19,6 @@ class OpenAiService
              'language' => 'nullable|string', // If language needs to be passed, you can extend this
          ]);*/
 
-//        $url = 'https://pm1.aminoapps.com/7743/e30571a8e830061622218df192213e710d5ea271r1-1152-2048v2_uhq.jpg';
         $file = $request->file('image');
         $filename = Str::random(40) . '.' . $file->getClientOriginalExtension(); // Generate a random filename
 
@@ -31,9 +30,6 @@ class OpenAiService
         }
         $imageUrl = asset('storage/' . $imagePath);
 
-        // Construct the local URL
-
-        return $imageUrl;
         $apiKey = getenv('OPEN_AI_KEY');
         $client = new Client();
 
@@ -56,7 +52,7 @@ class OpenAiService
                                 [
                                     'type' => 'image_url',
                                     'image_url' => [
-                                        'url' => $url,
+                                        'url' => $imageUrl,
                                     ],
                                 ],
                             ],
@@ -68,7 +64,7 @@ class OpenAiService
             $apiResponse = json_decode($response->getBody(), true);
 
             $recognizedObject = $apiResponse['choices'][0]['message']['content'] ?? 'Unknown object';
-
+            Storage::disk('public')->delete($imagePath);
             return response()->json([
                 'result' => $recognizedObject
             ]);

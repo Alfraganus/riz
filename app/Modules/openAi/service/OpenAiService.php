@@ -18,6 +18,7 @@ class OpenAiService
              'language' => 'nullable|string', // If language needs to be passed, you can extend this
          ]);*/
 
+
         $url = 'https://pm1.aminoapps.com/7743/e30571a8e830061622218df192213e710d5ea271r1-1152-2048v2_uhq.jpg';
         $language = $request->input('language', 'en'); // Default language is English
 

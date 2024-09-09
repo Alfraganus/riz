@@ -43,7 +43,7 @@ class GoogleLensService
             Storage::disk('public')->delete($imagePath);
 
             return response()->json([
-                'result' => $result
+                'result' => $result['visual_matches']
             ]);
 
         } catch (\Exception $e) {

@@ -42,9 +42,7 @@ class GoogleLensService
             $result = json_decode($response->getBody(), true);
             Storage::disk('public')->delete($imagePath);
 
-            return response()->json([
-                'result' => $result['visual_matches']
-            ]);
+            return response()->json($result['visual_matches']);
 
         } catch (\Exception $e) {
             Storage::disk('public')->delete($imagePath);

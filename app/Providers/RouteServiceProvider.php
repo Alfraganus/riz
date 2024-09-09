@@ -32,7 +32,6 @@ class RouteServiceProvider extends ServiceProvider
             Route::middleware('api')
                 ->prefix('api')
                 ->group(base_path('app/Modules/lens/routes.php'))
-                ->group(base_path('app/Modules/openAi/routes.php'))
                 ->group(base_path('routes/api.php'));
 
             Route::middleware('web')

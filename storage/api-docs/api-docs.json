@@ -1,0 +1,132 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "My API",
+        "description": "This is a sample API documentation.",
+        "contact": {
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/get-gpt-advice": {
+            "post": {
+                "tags": [
+                    "OpenAI"
+                ],
+                "summary": "Get GPT advice based on image",
+                "description": "Upload an image file to get advice or a response from GPT.",
+                "operationId": "f1af15fd3420d8aad50c09f96a813442",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "image"
+                                ],
+                                "properties": {
+                                    "image": {
+                                        "description": "The image file to send for analysis.",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response with GPT advice",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "advice": {
+                                            "description": "Advice or response from GPT",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request, e.g., if the file is missing or invalid"
+                    },
+                    "500": {
+                        "description": "Server Error, if something goes wrong on the server side"
+                    }
+                }
+            }
+        },
+        "/api/google-lens/get-results": {
+            "post": {
+                "tags": [
+                    "Google Lens"
+                ],
+                "summary": "Send image to Google Lens",
+                "description": "Uploads an image file to be processed by Google Lens.",
+                "operationId": "c7026875d15b687cf72677ba34820a73",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "image": {
+                                        "description": "The image file to be processed",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response with results from Google Lens",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "description": "Result of the Google Lens analysis",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request, e.g., if the file is missing or invalid"
+                    },
+                    "500": {
+                        "description": "Server Error, if something goes wrong on the server side"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "OpenAI",
+            "description": "OpenAI"
+        },
+        {
+            "name": "Google Lens",
+            "description": "Google Lens"
+        }
+    ]
+}

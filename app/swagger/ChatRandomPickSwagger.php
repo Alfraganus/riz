@@ -15,6 +15,7 @@ namespace App\swagger;
  *             @OA\Property(
  *                 property="response_level",
  *                 type="string",
+ *                   example="medium",
  *                 description="The level of response expected from GPT (e.g., 'easy', 'medium', 'hard')"
  *             )
  *         )

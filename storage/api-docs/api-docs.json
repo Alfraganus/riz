@@ -83,7 +83,8 @@
                                 "properties": {
                                     "response_level": {
                                         "description": "The level of response expected from GPT (e.g., 'easy', 'medium', 'hard')",
-                                        "type": "string"
+                                        "type": "string",
+                                        "example": "medium"
                                     }
                                 },
                                 "type": "object"

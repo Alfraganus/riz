@@ -67,6 +67,57 @@
                 }
             }
         },
+        "/api/get-gpt-random-pick": {
+            "post": {
+                "tags": [
+                    "OpenAI"
+                ],
+                "summary": "Get GPT Random Pick",
+                "description": "This endpoint sends a request to OpenAI GPT to pick a random response based on the input level.",
+                "operationId": "gptRandomPick",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "response_level": {
+                                        "description": "The level of response expected from GPT (e.g., 'easy', 'medium', 'hard')",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Random response selected"
+                                        },
+                                        "response_data": {
+                                            "description": "Details of the random pick",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request"
+                    }
+                }
+            }
+        },
         "/api/get-gpt-advice-by-text": {
             "post": {
                 "tags": [

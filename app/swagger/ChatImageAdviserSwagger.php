@@ -3,7 +3,7 @@ namespace App\swagger;
 
 /**
  * @OA\Post(
- *     path="/api/get-gpt-advice",
+ *     path="/api/get-gpt-advice-by-image",
  *     summary="Get GPT advice based on image",
  *     description="Upload an image file to get advice or a response from GPT.",
  *     tags={"OpenAI"},

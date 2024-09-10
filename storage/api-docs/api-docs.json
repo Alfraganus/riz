@@ -13,14 +13,14 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/get-gpt-advice": {
+        "/api/get-gpt-advice-by-image": {
             "post": {
                 "tags": [
                     "OpenAI"
                 ],
                 "summary": "Get GPT advice based on image",
                 "description": "Upload an image file to get advice or a response from GPT.",
-                "operationId": "f1af15fd3420d8aad50c09f96a813442",
+                "operationId": "b74b2fc320afde35aee11609f0501e7a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -60,6 +60,78 @@
                     },
                     "400": {
                         "description": "Bad Request, e.g., if the file is missing or invalid"
+                    },
+                    "500": {
+                        "description": "Server Error, if something goes wrong on the server side"
+                    }
+                }
+            }
+        },
+        "/api/get-gpt-advice-by-text": {
+            "post": {
+                "tags": [
+                    "OpenAI"
+                ],
+                "summary": "Get GPT advice based on text messages",
+                "description": "Send a series of text messages to GPT-4 along with a response level and receive advice or responses.",
+                "operationId": "6710af5fbb337204eb36db1a42b8e1f0",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "messages",
+                                    "response_level"
+                                ],
+                                "properties": {
+                                    "messages": {
+                                        "description": "Array of text messages to send to GPT",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "role": {
+                                                    "type": "string",
+                                                    "example": "my friend"
+                                                },
+                                                "text": {
+                                                    "type": "string",
+                                                    "example": "I wish I had barbercue for a lunch"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "response_level": {
+                                        "description": "The level of response detail you want from GPT",
+                                        "type": "string",
+                                        "example": "medium"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful response with GPT advice",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "description": "Advice or response from GPT",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request, e.g., if messages or response level are missing or invalid"
                     },
                     "500": {
                         "description": "Server Error, if something goes wrong on the server side"

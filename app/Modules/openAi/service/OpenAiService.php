@@ -2,79 +2,18 @@
 
 namespace App\Modules\openAi\service;
 
-use GuzzleHttp\Client;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
-
 class OpenAiService
 {
     const GPT4_URL = 'https://api.openai.com/v1/chat/completions';
 
-    public function recognizeObject(Request $request)
+
+    public static function getGPTCommands($responseLevel, $command_key)
     {
-        /* $request->validate([ w
-             'url' => 'required|url',
-             'language' => 'nullable|string', // If language needs to be passed, you can extend this
-         ]);*/
+        $gptCommands = [
+            'image_chat' => "You are an advanced assistant for recognizing objects in a photo. You recognize the text in the image and analyze the text and you are a personal aide who analyzes conversations and suggests responses for the user. The standard message length is two or three sentences. You are an expert in communication and know how to engage the interlocutor. Messages should be varied and interesting. Responses should be friendly, and depending on the level of suggestiveness, may include flirting. The user can provide conversation context (optional), which should also be taken into account. Responses can have three levels of suggestiveness: Level: Light: Friendly communication, minimal flirting. Level: Medium: Romantic communication, light flirting with a hint of intimacy. Level: High: Explicit communication with humor and confidence. You receive the conversation, the level of suggestiveness, and the topic (optional) from the user. Your advice should be based on the response level: {$responseLevel}. Upon request, each message you send can be rephrased. The user can send a message from the current conversation and add instructions on how to modify it, such as making it funnier, more romantic, longer, or shorter. rite instruction in the language that you were given messages",
+            'text_chat' => "You are a chat assistant, a personal aide who analyzes conversations and suggests responses for the user. The standard message length is two or three sentences. You are an expert in communication and know how to engage the interlocutor. Messages should be varied and interesting. Responses should be friendly, and depending on the level of suggestiveness, may include flirting. The user can provide conversation context (optional), which should also be taken into account. Responses can have three levels of suggestiveness: Level: Light: Friendly communication, minimal flirting. Level: Medium: Romantic communication, light flirting with a hint of intimacy. Level: High: Explicit communication with humor and confidence. You receive the conversation, the level of suggestiveness, and the topic (optional) from the user. Your advice should be based on the response level: {$responseLevel}. Upon request, each message you send can be rephrased. The user can send a message from the current conversation and add instructions on how to modify it, such as making it funnier, more romantic, longer, or shorter. write instruction in the language that you were given messages"
+        ];
 
-        $file = $request->file('image');
-        $filename = Str::random(40) . '.' . $file->getClientOriginalExtension(); // Generate a random filename
-
-        $imagePath = $file->storeAs('images', $filename, 'public');
-        $imageFullPath = storage_path('app/public/' . $imagePath);
-
-        if (!File::exists($imageFullPath)) {
-            return response()->json(['error' => 'Failed to save the uploaded image'], 500);
-        }
-        $imageUrl = asset('storage/' . $imagePath);
-
-        $apiKey = getenv('OPEN_AI_KEY');
-        $client = new Client();
-
-        try {
-            $response = $client->post(self::GPT4_URL, [
-                'headers' => [
-                    'Authorization' => "Bearer {$apiKey}",
-                    'Content-Type' => 'application/json',
-                ],
-                'json' => [
-                    'model' => 'gpt-4o-mini',
-                    'messages' => [
-                        [
-                            'role' => 'user',
-                            'content' => [
-                                [
-                                    'type' => 'text',
-                                    'text' => "You are an advanced assistant for recognizing objects in a photo. You recognize the text in the image and analyze the text and you advise me what to respond to chat, you advice me the next message based on context of the text, and your responce should only contain with advice without your own addition, your advice should contain from 3-5 sentences",
-                                ],
-                                [
-                                    'type' => 'image_url',
-                                    'image_url' => [
-                                        'url' => $imageUrl,
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-            ]);
-
-            $apiResponse = json_decode($response->getBody(), true);
-
-            $recognizedObject = $apiResponse['choices'][0]['message']['content'] ?? 'Unknown object';
-            Storage::disk('public')->delete($imagePath);
-            return response()->json([
-                'result' => $recognizedObject
-            ]);
-
-        } catch (\Exception $e) {
-            return response()->json([
-                'error' => 'Failed to recognize object',
-                'details' => $e->getMessage(),
-            ], 500);
-        }
+        return $gptCommands[$command_key];
     }
-
 }

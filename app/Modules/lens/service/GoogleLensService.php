@@ -48,7 +48,6 @@ class GoogleLensService
             $result = json_decode($response->getBody(), true);
             $info = $this->aiImageDetectionService->detectObject($imageUrl);
             Storage::disk('public')->delete($imagePath);
-            unset($info['headers']);
             return response()->json([
                 'info-gpt' => $info,
                 'visual_matches'=>$result['visual_matches'],

@@ -40,7 +40,7 @@ class OpenAiImageDetectionService extends OpenAiService
         ]);
 
         $format = [
-            'label' => 'label name',
+            'label' => ['label names'],
             'didYouKnow' => " didYouKnow name",
             'price' => "price name",
             'description' => "description name",
@@ -63,7 +63,7 @@ class OpenAiImageDetectionService extends OpenAiService
                 'messages' => [
                     [
                         'role' => 'user',
-                        'content' => "Provide information about $recognizedObject and give me the format in following array: $format, make few sentences for label in array element format, use 2-3 centences for didyounkow, description,  specifications, for facts format should be following, if it is macboomk air: facts:Display: 13.3 inches,Resolution: 2560 x 1600,Processor: apple m1 chip and so on and show currency for price make it so that it should be easy to json_Decode in php, do for example lavel:bugatti, did you know: fact and price:300, return only array and no more words",
+                        'content' => "Provide information about $recognizedObject and give me the format in following array: $format, make multiple label records for label field, use 2-3 centences for didyounkow, description,  specifications, for facts format should be following, if it is macboomk air: facts:Display: 13.3 inches,Resolution: 2560 x 1600,Processor: apple m1 chip and so on and show currency for price make it so that it should be easy to json_Decode in php, do for example lavel:bugatti, did you know: fact and price:300, return only array and no more words",
                     ],
                 ],
             ],

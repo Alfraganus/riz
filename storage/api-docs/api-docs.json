@@ -241,6 +241,84 @@
                     }
                 }
             }
+        },
+        "/api/get-detect-object": {
+            "post": {
+                "tags": [
+                    "Google Lens"
+                ],
+                "summary": "Detect and recognize an object from an image using GPT-4",
+                "description": "This endpoint accepts an image URL and language as input, uses GPT-4 to recognize objects in the image, and returns detailed information about the object.",
+                "operationId": "911ad8ef1bdf8d6fa1e820b54acad69e",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "url": {
+                                        "description": "The URL of the image to analyze",
+                                        "type": "string",
+                                        "example": "https://example.com/image.jpg"
+                                    },
+                                    "language": {
+                                        "description": "The language in which the response should be returned",
+                                        "type": "string",
+                                        "example": "en"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Object details retrieved successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "labels": {
+                                            "description": "The recognized object labels",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "did_you_know": {
+                                            "description": "Interesting facts about the recognized object",
+                                            "type": "string"
+                                        },
+                                        "price": {
+                                            "description": "Price of the recognized object, if applicable",
+                                            "type": "string"
+                                        },
+                                        "description": {
+                                            "description": "Description of the recognized object",
+                                            "type": "string"
+                                        },
+                                        "facts": {
+                                            "description": "Additional facts about the recognized object",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
         }
     },
     "tags": [

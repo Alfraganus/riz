@@ -2,6 +2,7 @@
 
 namespace App\Modules\lens\service;
 
+use App\Modules\openAi\service\OpenAiImageDetectionService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -11,6 +12,11 @@ class GoogleLensService
 {
     const LENS_API_KEY = '364d4e0519488e261248886c8c4555463407e3185b219d91b4a1df873d34ff0d';
     const SERP_API = 'https://serpapi.com/search.json';
+
+    public function __construct(OpenAiImageDetectionService $aiImageDetectionService)
+    {
+        $this->aiImageDetectionService =$aiImageDetectionService;
+    }
 
     public function sendToGoogleLens(Request $request)
     {
@@ -40,9 +46,13 @@ class GoogleLensService
             ]);
 
             $result = json_decode($response->getBody(), true);
+            $info = $this->aiImageDetectionService->detectObject($imageUrl);
             Storage::disk('public')->delete($imagePath);
 
-            return response()->json($result['visual_matches']);
+            return response()->json([
+                'visual_matches'=>$result['visual_matches'],
+                'info' => $info
+            ]);
 
         } catch (\Exception $e) {
             Storage::disk('public')->delete($imagePath);

@@ -74,7 +74,6 @@ class OpenAiImageDetectionService extends OpenAiService
 
 
         $cleanJsonString = str_replace(['```json', '```'], '', $results);
-        unset($cleanJsonString['headers']);
 
         return $cleanJsonString;
     }

@@ -50,8 +50,8 @@ class GoogleLensService
             Storage::disk('public')->delete($imagePath);
 
             return response()->json([
+                'info-gpt' => $info,
                 'visual_matches'=>$result['visual_matches'],
-                'info' => $info
             ]);
 
         } catch (\Exception $e) {

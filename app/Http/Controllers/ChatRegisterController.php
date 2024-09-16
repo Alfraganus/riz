@@ -10,7 +10,7 @@ class ChatRegisterController extends Controller
 {
     public function storeChatId(Request $request)
     {
-        $chatIds = config('chat.php');
+        $chatIds = config('chat.php') ;
         return var_dump($chatIds);
         $chatId = $request->input('chat_id');
 

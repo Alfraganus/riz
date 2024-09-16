@@ -72,8 +72,4 @@ class OpenAiImageChatService extends  OpenAiService
         }
     }
 
-
-
-
-
 }

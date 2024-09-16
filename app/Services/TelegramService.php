@@ -1,10 +1,8 @@
 <?php
-// app/Services/TelegramService.php
-
 namespace App\Services;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
-use App\Models\SubscribedUser;
 
 class TelegramService
 {
@@ -18,15 +16,19 @@ class TelegramService
         $this->botToken = env('TELEGRAM_BOT_TOKEN');
     }
 
-    public function sendMessage($message)
+    public function sendErrorMessage($title, $content)
     {
-        $subscribedUsers = SubscribedUser::all();
+        $botToken = env('TELEGRAM_BOT_TOKEN');
+        $message = "🚨 *{$title}*\n\n{$content}";
+        $chatIds = Config::get('chat.chat_ids', []);
+        foreach ($chatIds as $chat_id) {
 
-        foreach ($subscribedUsers as $user) {
-            Http::post("https://api.telegram.org/bot{$this->botToken}/sendMessage", [
-                'chat_id' => $user->chat_id,
+            Http::post("https://api.telegram.org/bot$botToken/sendMessage", [
+                'chat_id' => $chat_id,
                 'text' => $message,
+                'parse_mode' => 'Markdown',
             ]);
         }
+
     }
 }

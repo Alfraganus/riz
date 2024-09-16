@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 
 class FetchTelegramUpdates extends Command
@@ -28,16 +29,14 @@ class FetchTelegramUpdates extends Command
     {
         $botToken = env('TELEGRAM_BOT_TOKEN');
 
-        $chatIds = config('chat.php');
-    return var_dump($chatIds['chat_ids']);
-        foreach ($chatIds['chat_ids'] as $chat_id) {
+        $chatIds = Config::get('chat.chat_ids', []);
+        foreach ($chatIds as $chat_id) {
 
             Http::post("https://api.telegram.org/bot$botToken/sendMessage", [
                 'chat_id' => $chat_id,
                 'text' => "Hello world",
             ]);
         }
-
 
         $this->info('Telegram updates fetched and subscribed users updated.');
     }

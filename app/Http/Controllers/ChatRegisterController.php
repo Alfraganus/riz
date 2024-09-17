@@ -11,7 +11,6 @@ class ChatRegisterController extends Controller
 {
     public function storeChatId(Request $request)
     {
-        throw new \Exception("test works");
         $chatId = $request->input('chat_id');
 
         if ($chatId) {
